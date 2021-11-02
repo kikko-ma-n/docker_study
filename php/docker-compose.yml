@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  app-db:
+    image: mysql:5.7
+    networks:
+      - appnet
+    volumes:
+      - app-db-volume:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: password
+
+  php-app:
+    image: php:7.2-apache
+    networks:
+      - appnet
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - ./src:/var/www/html
+
+networks:
+  appnet:
+
+volumes:
+  app-db-volume:
