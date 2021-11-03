@@ -1,21 +1,7 @@
 version: "3"
 
 services:
-  app-db:
-    image: mysql:5.7
-    networks:
-      - appnet
-    volumes:
-      - app-db-volume:/var/lib/mysql
-    restart: always
-    env_file: ./.env
-    # environment:
-    #   MYSQL_ROOT_PASSWORD: rootpassword
-    #   MYSQL_DATABASE: appdb
-    #   MYSQL_USER: appuser
-    #   MYSQL_PASSWORD: password
-
-  php-app:
+  app:
     image: php:7.2-apache
     networks:
       - appnet
@@ -24,6 +10,22 @@ services:
     restart: always
     volumes:
       - ./src:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    networks:
+      - appnet
+    volumes:
+      - ./docker/db/mysql_data:/var/lib/mysql
+    restart: always
+    env_file: ./docker/db/db-variable.env
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: rootpassword
+    #   MYSQL_DATABASE: appdb
+    #   MYSQL_USER: appuser
+    #   MYSQL_PASSWORD: password
 
 networks:
   appnet:

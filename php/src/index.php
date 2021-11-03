@@ -5,6 +5,10 @@
   <title>docker test</title>
 </head>
 <body>
-  index.php
+  <?php
+
+    echo 'Hi!' .PHP_EOL;
+
+  ?>
 </body>
 </html>
