@@ -2,7 +2,10 @@ version: "3"
 
 services:
   app:
-    image: php:7.2-apache
+    # image: php:7.2-apache
+    build:
+      context: ./docker/app
+      dockerfile: DockerFile
     networks:
       - appnet
     ports:
@@ -14,13 +17,15 @@ services:
       - db
 
   db:
-    image: mysql:5.7
+    image: mysql:5.7.16
     networks:
       - appnet
     volumes:
       - ./docker/db/mysql_data:/var/lib/mysql
+      - ./docker/db/my.cnf:/ect/mysql/conf.d/my.conf
     restart: always
-    env_file: ./docker/db/db-variable.env
+    env_file:
+      - ./docker/db/db-variable.env
     # environment:
     #   MYSQL_ROOT_PASSWORD: rootpassword
     #   MYSQL_DATABASE: appdb

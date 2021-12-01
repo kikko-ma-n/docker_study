@@ -7,7 +7,7 @@
 <body>
   <?php
 
-    echo 'Hi!' .PHP_EOL;
+    echo 'Hi! PHP!!' .PHP_EOL;
 
   ?>
 </body>
